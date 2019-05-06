@@ -1,0 +1,60 @@
+﻿@model IEnumerable<IEProject_AfterIteration1.Models.Suburb_Map>
+
+<p>
+    <h4 align="center">@ViewBag.SuburbMap </h4><br />
+</p>
+<style>
+    html, body, #map {
+        height: 100%;
+    }
+</style>
+<div id='map' style='width: 1300px; height: 300px; align-content: center'></div>
+<table class="table" style="display:none">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Latitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Longitude)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="coordinates">
+            <td class="description">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="latitude">
+                @Html.DisplayFor(modelItem => item.Latitude)
+            </td>
+            <td class="longitude">
+                @Html.DisplayFor(modelItem => item.Longitude)
+            </td>
+        </tr>
+    }
+
+</table>
+@*@section Scripts {
+        @Scripts.Render("~/bundles/mapbox")
+    }*@
+@*<script>
+        mapboxgl.accesstoken = 'pk.eyj1ijoicmfqzgvlcgnomcisimeioijjam1pz3cyegswnhh2m3lwa2ywejfpzjhoin0.ixtagovrv3y5kkjborgjiw';
+        var map = new mapboxgl.map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11'
+        });
+    </script>*@
+<script>
+        $(window).on('beforeunload', function () {
+            map.removeControl(directions);
+            map.remove();
+        });
+</script>
+           
+
+<script src="~/Scripts/location.js"></script>

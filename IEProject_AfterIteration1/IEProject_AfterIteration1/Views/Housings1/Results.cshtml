@@ -1,0 +1,141 @@
+﻿@model IEnumerable<IEProject_AfterIteration1.Models.Housing_Results>
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>function isHidden(oDiv) { var vDiv = document.getElementById(oDiv); vDiv.style.display = (vDiv.style.display == 'none') ? 'block' : 'none'; }</script>
+<style>
+    .dataTables_filter, .dataTables_info, .dataTables_paginate, .dataTables_length {
+        display: none;
+    }
+</style>
+<div class="container">
+    <h2 align="center">               Top 5 recommended suburbs based on your preference</h2><br />
+    <div class="row">
+        <div class="col-6 col-lg-3 col-sm-3" style="margin-left:30px">
+            <div class="hotel-reservation--area mb-100">
+                @using (Html.BeginForm("Results", "Housings1"))
+                {
+
+                    <div class="form-group mb-30">
+                        <label for="guests" hidden>Filters</label>
+                        <div class="row">
+                            <div class="col-6">
+                                <p><b>School counts</b></p>
+                                <ul>
+                                    <li>@Html.RadioButton("Schooltype", "1", new { @id = "SchoolType1" }) Primary</li>
+                                    <li>@Html.RadioButton("Schooltype", "2", new { @id = "SchoolType2" }) Secondary</li>
+                                    <li>@Html.RadioButton("Schooltype", "3", new { @id = "SchoolType3" }) Special</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <input type="submit" class="btn roberto-btn w-75" value="Submit" />
+                    </div>
+                    <div onclick="isHidden('div1')">
+                        <b>Click to See Column Definitions</b>
+
+                        <div id="div1" style="display:none">
+                            <p>Rent: Average weekly rent in AUD</p>
+                            <p>Distance: Distance to CBD in km</p>
+                            <p>SchoolNo: Count of primary, secondary and special schools</p>
+                            <p>HospitalNo: Count of hospitals</p>
+                            <p>SupermarketNo: Count of supermarkets</p>
+                            <p>StationNo: Count of public transport stations..</p>
+                        </div>
+                    </div>
+
+
+                }
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 col-sm-6">
+            <table class="row-border table" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>
+
+                            @Html.DisplayNameFor(model => model.Suburb)
+
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Rent)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Distance)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SchoolNo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.HospitalNo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SupermarketNo)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StationNo)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Suburb)
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Rent)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Distance)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SchoolNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.HospitalNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SupermarketNo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StationNo)
+                            </td>
+                            <td>
+                                @Ajax.ActionLink("More INFO", "MapView", new { Suburb = item.Suburb }, new AjaxOptions() {
+                               HttpMethod = "Get",
+                               UpdateTargetId = "ExampleOfAjaxLink",
+                               InsertionMode = InsertionMode.Replace
+                           })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div id="ExampleOfAjaxLink" style="position:relative;padding-bottom:100px;"></div>
+
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
+    @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap.js")
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable();
+        });</script>
+
+}
+
+<link href="~/Content/DataTables/css/dataTables.semanticui.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables/css/semantic.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables/css/dataTables.jqueryui.min.css" rel="stylesheet" />
+
