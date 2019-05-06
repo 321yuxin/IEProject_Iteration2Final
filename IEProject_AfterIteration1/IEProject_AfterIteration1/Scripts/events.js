@@ -89,6 +89,7 @@ request.onreadystatechange = function () {
             outerdiv.appendChild(innerdiv);
             div.appendChild(outerdiv);
         }
+        document.getElementById("myview1").scrollIntoView();
     }
 };
 
